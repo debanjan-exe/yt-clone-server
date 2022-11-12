@@ -7,8 +7,10 @@ import commentRoutes from "./routes/comment.route.js";
 import videoRoutes from "./routes/video.route.js";
 import authRoutes from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 const app = express();
+app.use(cors());
 
 const connect = () => {
     mongoose
