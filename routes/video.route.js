@@ -10,6 +10,7 @@ import {
     search,
     trend,
     updateVideo,
+    getByLikes,
 } from "../controllers/video.controller.js";
 import { verifyToken } from "../verifyToken.js";
 
@@ -33,7 +34,7 @@ router.put("/view/:id", addView);
 // get trending videos
 router.get("/trend", trend);
 
-// get ramdom videos
+// get random videos
 router.get("/random", random);
 
 // get subscribers videos
@@ -41,6 +42,9 @@ router.get("/sub", verifyToken, getSubVideos);
 
 // get video by tags
 router.get("/tags", getByTags);
+
+// get videos by liked
+router.get("/liked", verifyToken, getByLikes);
 
 // get video by title
 router.get("/search", search);
