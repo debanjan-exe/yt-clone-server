@@ -74,6 +74,17 @@ export const getVideo = async (req, res, next) => {
     }
 };
 
+export const getVideoByChannelId = async (req, res, next) => {
+    try {
+        const videos = await Video.find({ userId: req.params.userId }).limit(
+            20
+        );
+        res.status(200).json(videos);
+    } catch (err) {
+        next(err);
+    }
+};
+
 export const addView = async (req, res, next) => {
     try {
         Video.findByIdAndUpdate(req.params.id, {

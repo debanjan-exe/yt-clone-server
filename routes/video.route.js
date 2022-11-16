@@ -11,6 +11,7 @@ import {
     trend,
     updateVideo,
     getByLikes,
+    getVideoByChannelId,
 } from "../controllers/video.controller.js";
 import { verifyToken } from "../verifyToken.js";
 
@@ -27,6 +28,9 @@ router.delete("/:id", verifyToken, deleteVideo);
 
 // get a video
 router.get("/find/:id", getVideo);
+
+// get a video by channel id
+router.get("/user/:userId", getVideoByChannelId);
 
 // add a view
 router.put("/view/:id", addView);
