@@ -76,27 +76,51 @@ export const unsubscribeUser = async (req, res, next) => {
 export const likeVid = async (req, res, next) => {
     const id = req.user.id;
     const videoId = req.params.videoId;
-    try {
-        await Video.findByIdAndUpdate(videoId, {
-            $addToSet: { likes: id },
-            $pull: { dislikes: id },
-        });
-        res.status(200).json("Video has been liked");
-    } catch (err) {
-        next(err);
+    const video = await Video.findById(videoId);
+    if (video.likes.includes(id)) {
+        try {
+            await Video.findByIdAndUpdate(videoId, {
+                $pull: { likes: id },
+            });
+            res.status(200).json("Video has been removed from liked");
+        } catch (err) {
+            next(err);
+        }
+    } else {
+        try {
+            await Video.findByIdAndUpdate(videoId, {
+                $addToSet: { likes: id },
+                $pull: { dislikes: id },
+            });
+            res.status(200).json("Video has been liked");
+        } catch (err) {
+            next(err);
+        }
     }
 };
 
 export const dislikeVid = async (req, res, next) => {
     const id = req.user.id;
     const videoId = req.params.videoId;
-    try {
-        await Video.findByIdAndUpdate(videoId, {
-            $addToSet: { dislikes: id },
-            $pull: { likes: id },
-        });
-        res.status(200).json("Video has been disliked");
-    } catch (err) {
-        next(err);
+    const video = await Video.findById(videoId);
+    if (video.dislikes.includes(id)) {
+        try {
+            await Video.findByIdAndUpdate(videoId, {
+                $pull: { dislikes: id },
+            });
+            res.status(200).json("Video has been removed from disliked");
+        } catch (err) {
+            next(err);
+        }
+    } else {
+        try {
+            await Video.findByIdAndUpdate(videoId, {
+                $addToSet: { dislikes: id },
+                $pull: { likes: id },
+            });
+            res.status(200).json("Video has been disliked");
+        } catch (err) {
+            next(err);
+        }
     }
 };
