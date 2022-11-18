@@ -16,11 +16,7 @@ export const signup = async (req, res, next) => {
         const user = await User.findOne({ email: req.body.email });
         const { password, ...others } = user._doc;
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-        res.cookie("access_token", token, {
-            httpOnly: true,
-        })
-            .status(200)
-            .json(others);
+        res.status(200).json({ access_token: token, ...others });
     } catch (err) {
         next(err);
     }
@@ -40,12 +36,7 @@ export const signin = async (req, res, next) => {
 
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 
-        res.cookie("access_token", token, {
-            httpOnly: true,
-        })
-            .status(200)
-            .json(others);
-        // res.status(200).send("User has been created !!");
+        res.status(200).json({ access_token: token, ...others });
     } catch (err) {
         next(err);
     }

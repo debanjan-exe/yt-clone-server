@@ -11,7 +11,7 @@ import cors from "cors";
 
 const app = express();
 
-app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+app.use(cors({ credentials: true, origin: true }));
 
 const connect = () => {
     mongoose
@@ -23,6 +23,18 @@ const connect = () => {
             throw err;
         });
 };
+
+// app.use(function (req, res, next) {
+//     res.header("Access-Control-Allow-Credentials", true);
+//     res.header("Access-Control-Expose-Headers", true);
+//     res.header("Access-Control-Allow-Origin", req.headers.origin);
+//     res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+//     res.header(
+//         "Access-Control-Allow-Headers",
+//         "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept"
+//     );
+//     next();
+// });
 
 app.get("/", (req, res) => {
     res.send("Server is connected !");
