@@ -49,11 +49,7 @@ export const googleAuth = async (req, res, next) => {
         const user = await User.findOne({ email: req.body.email });
         if (user) {
             const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-            res.cookie("access_token", token, {
-                httpOnly: true,
-            })
-                .status(200)
-                .json(user._doc);
+            res.status(200).json({ access_token: token, ...user._doc });
         } else {
             const newUser = new User({
                 ...req.body,
@@ -66,11 +62,7 @@ export const googleAuth = async (req, res, next) => {
                 { id: savedUser._id },
                 process.env.JWT_SECRET
             );
-            res.cookie("access_token", token, {
-                httpOnly: true,
-            })
-                .status(200)
-                .json(savedUser._doc);
+            res.status(200).json({ access_token: token, ...savedUser._doc });
         }
     } catch (err) {
         next(err);
@@ -81,9 +73,8 @@ export const googleAuth = async (req, res, next) => {
 
 export const logout = async (req, res, next) => {
     // Set token to none and expire after 5 seconds
-    res.cookie("access_token", undefined, {
-        httpOnly: true,
-    })
-        .status(200)
-        .json({ success: true, message: "User logged out successfully" });
+    res.status(200).json({
+        success: true,
+        message: "User logged out successfully",
+    });
 };

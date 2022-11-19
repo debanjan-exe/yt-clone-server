@@ -31,6 +31,6 @@ router.put("/dislike/:commentId", verifyToken, dislikeComment);
 router.put("/reply/:commentId", verifyToken, replyToComment);
 
 // delete replies
-router.put("/reply/:commentId/:replyId", verifyToken, deleteReply);
+router.put("/reply/:commentId/delete/:replyId", verifyToken, deleteReply);
 
 export default router;
