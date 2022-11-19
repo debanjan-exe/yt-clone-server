@@ -72,7 +72,6 @@ export const googleAuth = async (req, res, next) => {
 //LOGOUT
 
 export const logout = async (req, res, next) => {
-    // Set token to none and expire after 5 seconds
     res.status(200).json({
         success: true,
         message: "User logged out successfully",
